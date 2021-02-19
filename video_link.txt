@@ -1,0 +1,10 @@
+Controller: https://www.youtube.com/watch?v=LoLQXfk36tk&feature=youtu.be
+Drone: https://www.youtube.com/watch?v=O2vA4mrqPXA&feature=youtu.be
+
+Note: drone.get_state_log() in the tellolib.py was not working properly (it was returning empty), 
+so I modified the started code by sending fake data to the telemetry table in the database in place 
+of the actual data in order to demonstrate that my update table and pulling from the telemetry table 
+in the database functions correctly. In the console, you can see that when I print out ("DRONE LOG: ", log)
+it just returns empty. This issue was brought up in the slidespace discussion board. It seems that many people
+have ths issue, and I speculate it is becuase some models of the drone are slightly different to the
+professor's, so some of the code in the API does not work properly with our drones.
