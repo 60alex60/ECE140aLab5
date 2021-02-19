@@ -5,14 +5,186 @@
         <link rel="stylesheet" type="text/css" href="web_ui.css">
         <script src="web_ui.js"></script>
     </head>
+
     <body>
         <h1>Tello Controller</h1>
-
+    
         <!-- Add your HTML below -->
+        <button class ="controller2" id="takeoff" onClick="sendNoValCommand(this.id)">Takeoff</button>
+        <button class ="controller2" id="land" onClick="sendNoValCommand(this.id)">Land</button>
+        <br><br>
         
-        <!-- You should copy your controller from Lab 4 Here (you can rebuild it if you so choose) -->
+        <label for="inputField">Value:</label><br>
+        <input type="text" id="inputField" name="inputField" placeholder="Enter Movement Value"><br>
+      
+        <br><br>
+
+        <h2>Toggle Flightplan Mode</h2>
+
+        <label class="switch">
+        <input type="checkbox" onclick="displayFlightPlanBox()" id="flightCheckBox">
+        <span class="slider round"></span>
+        </label>
+
+       
+        <textarea id="flightplanBox" class="flightplanBox" style="display:none"></textarea>
+        <button id="flightplanButton" style="display:none" onclick="sendFlightPlan()">Send Flight Plan</button>
+      
+
+        <br><br><br><br>
         
-        <!-- Build your new elements (live/plan mode button, textbox, logging view, etc...) -->
+    
+    
+        <section class="grid">
+    
+            <table class="fixed">
+                <tr>
+                    <td></td>
+                    <td><button class="controller" id="up" onClick="sendCommand(this.id)">&#8657;</button></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><button class="controller" id="ccw" onClick="sendCommand(this.id)">&#8630;</button></td>
+                    <td></td>
+                    <td><button class="controller" id="cw" onClick="sendCommand(this.id)">&#8631;</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button class="controller" id="down" onClick="sendCommand(this.id)">&#8659;</button></td>
+                    <td></td>
+                </tr>
+            </table>
+        
+    
+    
+    
+    
+            <table class = "fixed">
+                <tr>
+                    <td></td>
+                    <td><button class="controller" id="forward" onClick="sendCommand(this.id)">&#8593;</button></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><button class="controller" id="left" onClick="sendCommand(this.id)">&#8592;</button></td>
+                    <td></td>
+                    <td><button class="controller" id="right" onClick="sendCommand(this.id)">&#8594;</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button class="controller" id="back" onClick="sendCommand(this.id)">&#8595;</button></td>
+                    <td></td>
+                </tr>
+            </table>
+
+        </section>
+
+            <br><br>
+            <h1>Flight Telemetry</h1>
+
+            <div class="container-fluid" style="margin-top: 10px" id="telemetryTable">
+
+                <div class="table-row header">
+                    <div class="num">Pitch</div>
+                    <div class="num">Roll</div>
+                    <div class="num">Yaw</div>
+                    <div class="num">VGX</div>
+                    <div class="num">VGY</div>
+                    <div class="num">VGZ</div>
+                    <div class="num">Temp Low</div>
+                    <div class="num">Temp High</div>
+                    <div class="num">Time of Flight</div>
+                    <div class="num">Height</div>
+                    <div class="num">Battery</div>
+                    <div class="num">Barometer</div>
+                    <div class="num">Time</div>
+                    <div class="num">AGX</div>
+                    <div class="num">AGY</div>
+                    <div class="num">AGZ</div>
+                </div>
+              
+
+
+                {% for move in moves%}
+                <div class="table-row">
+                    <div class="num">{{move.pitch}}</div>
+                    <div class="num">{{move.roll}}</div>
+                    <div class="num">{{move.yaw}}</div>
+                    <div class="num">{{move.vgx}}</div>
+                    <div class="num">{{move.vgy}}</div>
+                    <div class="num">{{move.vgz}}</div>
+                    <div class="num">{{move.temp1}}</div>
+                    <div class="num">{{move.temph}}</div>
+                    <div class="num">{{move.tof}}</div>
+                    <div class="num">{{move.h}}</div>
+                    <div class="num">{{move.bat}}</div>
+                    <div class="num">{{move.baro}}</div>
+                    <div class="num">{{move.time}}</div>
+                    <div class="num">{{move.agx}}</div>
+                    <div class="num">{{move.agy}}</div>
+                    <div class="num">{{move.agz}}</div>
+                </div>
+                {% endfor %}
+              </div>
+              
+        </div>
 
     </body>
 </html>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+
+        var dataURL = "http://localhost:8000/get_telemetry";
+
+
+        function showError(err) {
+            console.log(err);
+        }
+
+
+        function fetchFunction() {
+            fetch(dataURL)
+                .then(response => response.json())
+                .then(expandTable)
+                .catch(showError)
+        }
+
+
+        function expandTable(data) {
+                document.getElementById("telemetryTable").innerHTML +=  
+                `     <div class='table-row'>
+                        <div class="num">`+data.pitch+`</div>
+                        <div class="num">`+data.roll+`</div>
+                        <div class="num">`+data.yaw+`</div>
+                        <div class="num">`+data.vgx+`</div>
+                        <div class="num">`+data.vgy+`</div>
+                        <div class="num">`+data.vgz+`</div>
+                        <div class="num">`+data.templ+`</div>
+                        <div class="num">`+data.temph+`</div>
+                        <div class="num">`+data.tof+`</div>
+                        <div class="num">`+data.h+`</div>
+                        <div class="num">`+data.bat+`</div>
+                        <div class="num">`+data.baro+`</div>
+                        <div class="num">`+data.time+`</div>
+                        <div class="num">`+data.agx+`</div>
+                        <div class="num">`+data.agy+`</div>
+                        <div class="num">`+data.agz+`</div>
+                    </div>`; 
+            
+        }
+
+
+
+        var intervalId = window.setInterval(function () {
+            fetchFunction();
+        }, 3000);
+
+
+
+    });
+
+
+
+</script>
