@@ -15,7 +15,7 @@ db_pass = os.environ['MYSQL_PASSWORD']
 db_name = os.environ['MYSQL_DATABASE']
 
 # At most, send a command every COMMAND_DELAY seconds
-COMMAND_DELAY = 1
+COMMAND_DELAY = 8
 
 heart_beat_freq = 10
 
@@ -58,10 +58,16 @@ if __name__ == "__main__":
 
         # Insert recent telemetry data into database
         log = drone.get_state_log()
+        print("DRONE LOG: ",log)
         cursor.executemany(
             """INSERT INTO Telemetry (pitch, roll, yaw, vgx, vgy, vgz, templ, temph, tof, h, bat, baro, time, agx, agy, agz)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
             log
+        )
+ #NOTE: drone.get_state_log() is not working, so fake data is being created for the time being.
+        cursor.execute(
+            """INSERT INTO Telemetry (pitch, roll, yaw, vgx, vgy, vgz, templ, temph, tof, h, bat, baro, time, agx, agy, agz)
+            VALUES (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)"""
         )
 
         # Mark the command as completed
@@ -75,6 +81,15 @@ if __name__ == "__main__":
           print("DEBUG: Query battery level to keep connection (dispatcher)")
           drone.send_command("battery?")
           time_last_command_sent = time.time()
+
+
+ #         log = drone.get_state_log()
+ #         print("DRONE LOG: ",log)
+ #         cursor.executemany(
+ #           """INSERT INTO Telemetry (pitch, roll, yaw, vgx, vgy, vgz, templ, temph, tof, h, bat, baro, time, agx, agy, agz)
+ #           VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+ #           log
+ #         )
 #TODO REMOVE THIS
 #          cursor.execute(
 #            """INSERT INTO Telemetry (pitch, roll, yaw, vgx, vgy, vgz, templ, temph, tof, h, bat, baro, time, agx, agy, agz)
