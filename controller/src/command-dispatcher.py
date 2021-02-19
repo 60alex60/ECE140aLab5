@@ -76,7 +76,7 @@ if __name__ == "__main__":
           drone.send_command("battery?")
           time_last_command_sent = time.time()
 #TODO REMOVE THIS
-          cursor.execute(
-            """INSERT INTO Telemetry (pitch, roll, yaw, vgx, vgy, vgz, templ, temph, tof, h, bat, baro, time, agx, agy, agz)
-            VALUES (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)"""
-          )
+#          cursor.execute(
+#            """INSERT INTO Telemetry (pitch, roll, yaw, vgx, vgy, vgz, templ, temph, tof, h, bat, baro, time, agx, agy, agz)
+#            VALUES (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)"""
+#          )
