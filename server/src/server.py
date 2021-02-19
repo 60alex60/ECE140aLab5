@@ -97,7 +97,7 @@ def get_telemetry_route(req):
     +', "agy":'+str(response[15])+', "agz":'+str(response[16])+'}'
     )
 
-    print(returnResponse)
+  #  print(returnResponse)
     return Response(returnResponse)
   else:
     print("TELEMETRY TABLE EMPTY")
