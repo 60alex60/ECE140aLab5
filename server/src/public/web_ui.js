@@ -1,11 +1,5 @@
 // Add javascript here
 
-
-
-
-
-
-
 var dataURL = "http://localhost:8000/drone_command/";
     
 function sendCommand(command){
@@ -41,6 +35,52 @@ function displayFlightPlanBox(){
         
 }
 
+function addCode() { 
+    var test = 6
+    document.getElementById("telemetryTable").innerHTML +=  
+    `     <div class='table-row'>
+            <div class="num">`+test+`</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+        </div>`; 
+} 
+
+function addCode2() { 
+    var test = 9
+    document.getElementById("telemetryTable").innerHTML +=  
+    `     <div class='table-row'>
+            <div class="num">`+test+`</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+            <div class="num">2</div>
+        </div>`; 
+
+} 
 
 
 

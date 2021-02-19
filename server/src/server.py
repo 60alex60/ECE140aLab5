@@ -76,6 +76,31 @@ def drone_command_route(req):
 #############################################################
 ### Define and build your NEW route functionalities here: ###
 #############################################################
+def get_telemetry_route(req):
+  db = mysql.connect(host = db_host, database = db_name, user = db_user, passwd = db_pass)
+  cursor = db.cursor()
+  cursor.execute("select * from Telemetry ORDER BY id DESC limit 1;")
+  response = cursor.fetchone()
+
+  
+
+  # Check if there was telemetry
+  if response is not None:
+    returnResponse = ('{ "pitch":'+str(response[1])+', "roll":'+str(response[2])
+    +', "yaw":'+str(response[3])+', "vgx":'+str(response[4])
+    +', "vgy":'+str(response[5])+', "vgz":'+str(response[6])
+    +', "templ":'+str(response[7])+', "temph":'+str(response[8])
+    +', "tof":'+str(response[9])+', "h":'+str(response[10])
+    +', "bat":'+str(response[11])+', "baro":'+str(response[12])
+    +', "time":'+str(response[13])+', "agx":'+str(response[14])
+    +', "agy":'+str(response[15])+', "agz":'+str(response[16])+'}'
+    )
+#fix this line
+    print(returnResponse)
+    return Response(returnResponse)
+  else:
+    print("TELEMETRY TABLE EMPTY")
+    return Response("EMPTY")
 
 
 
@@ -101,6 +126,9 @@ if __name__ == '__main__':
     ############## State your NEW routes here: ##############
     #########################################################
     
+    config.add_route('get_telemetry', '/get_telemetry')
+    config.add_view(get_telemetry_route, route_name='get_telemetry')
+
     
     config.add_static_view(name='/', path='./public', cache_max_age=3600)
 
