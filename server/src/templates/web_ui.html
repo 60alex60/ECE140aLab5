@@ -26,10 +26,10 @@
         <span class="slider round"></span>
         </label>
 
-        <form action="/flight_plan">
-            <textarea id="flightplanBox" class="flightplanBox" style="display:none"></textarea>
-            <input type = "submit" value="Send Flight Plan" id="flightplanButton" style="display:none">
-        </form>
+       
+        <textarea id="flightplanBox" class="flightplanBox" style="display:none"></textarea>
+        <button id="flightplanButton" style="display:none" onclick="sendFlightPlan()">Send Flight Plan</button>
+      
 
         <br><br><br><br>
         
@@ -128,8 +128,6 @@
               </div>
               
         </div>
-        <button onclick="addCode()">Add Stuff</button> 
-        <button onclick="addCode2()">Add Stuff2</button> 
 
     </body>
 </html>

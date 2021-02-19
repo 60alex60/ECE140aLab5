@@ -35,52 +35,29 @@ function displayFlightPlanBox(){
         
 }
 
-function addCode() { 
-    var test = 6
-    document.getElementById("telemetryTable").innerHTML +=  
-    `     <div class='table-row'>
-            <div class="num">`+test+`</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-        </div>`; 
-} 
+function sendFlightPlan(){
+    commandList = document.getElementById("flightplanBox").value;
+    commandList = commandList.replaceAll("\n",",")
+    var dataURL = "http://localhost:8000/flight_plan";
 
-function addCode2() { 
-    var test = 9
-    document.getElementById("telemetryTable").innerHTML +=  
-    `     <div class='table-row'>
-            <div class="num">`+test+`</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-            <div class="num">2</div>
-        </div>`; 
+   // const commands = {commandJson: commandList}
+    console.log((commandList));
 
-} 
+    fetch(dataURL, {
+    method: 'POST', 
+    body: commandList
+    })
+    .then(response => response.json())
+    .then(data => {
+    console.log('Success:', data);
+    })
+    .catch((error) => {
+    console.error('Error:', error);
+    });
+
+
+}
+
 
 
 

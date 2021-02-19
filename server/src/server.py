@@ -31,9 +31,10 @@ def send_command(command):
   db.commit()
 
   print('-----INSERT-----')
-  print(cursor.rowcount, "record inserted.")
+  print(cursor.rowcount, "record inserted. ", command)
 
-  cursor.execute("select * from Commands;")
+  print('-----Queued Commands-----')
+  cursor.execute("select * from Commands where completed=0;")
   response = cursor.fetchall()
   print(response)
   pass
@@ -95,12 +96,26 @@ def get_telemetry_route(req):
     +', "time":'+str(response[13])+', "agx":'+str(response[14])
     +', "agy":'+str(response[15])+', "agz":'+str(response[16])+'}'
     )
-#fix this line
+
     print(returnResponse)
     return Response(returnResponse)
   else:
     print("TELEMETRY TABLE EMPTY")
     return Response("EMPTY")
+
+def flight_plan_route(commands):
+  
+
+  splitList = str(commands.body)
+  splitList = splitList[2:-1]
+  splitList = splitList.split(",")
+
+  print(splitList)
+
+  for command in splitList:
+    send_command(command)
+  return Response("Success")
+
 
 
 
@@ -128,6 +143,9 @@ if __name__ == '__main__':
     
     config.add_route('get_telemetry', '/get_telemetry')
     config.add_view(get_telemetry_route, route_name='get_telemetry')
+
+    config.add_route('flight_plan', '/flight_plan')
+    config.add_view(flight_plan_route, route_name='flight_plan')
 
     
     config.add_static_view(name='/', path='./public', cache_max_age=3600)
