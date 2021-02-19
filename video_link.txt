@@ -1,5 +1,5 @@
 Controller: https://www.youtube.com/watch?v=LoLQXfk36tk&feature=youtu.be
-Drone: https://www.youtube.com/watch?v=O2vA4mrqPXA&feature=youtu.be
+Drone: https://www.youtube.com/watch?v=tLCslWnWxcw&feature=youtu.be
 
 Note: drone.get_state_log() in the tellolib.py was not working properly (it was returning empty), 
 so I modified the started code by sending fake data to the telemetry table in the database in place 
